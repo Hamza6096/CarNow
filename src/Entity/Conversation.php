@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\MessagesRepository;
+use App\Repository\ConversationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MessagesRepository::class)]
-class Messages
+#[ORM\Entity(repositoryClass: ConversationRepository::class)]
+class Conversation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
