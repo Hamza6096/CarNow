@@ -45,6 +45,9 @@ class Renting
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $actualDuration;
 
+    #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
+    private $dailyPrice;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -166,6 +169,18 @@ class Renting
     public function setActualDuration(?\DateTimeInterface $actualDuration): self
     {
         $this->actualDuration = $actualDuration;
+
+        return $this;
+    }
+
+    public function getDailyPrice(): ?string
+    {
+        return $this->dailyPrice;
+    }
+
+    public function setDailyPrice(string $dailyPrice): self
+    {
+        $this->dailyPrice = $dailyPrice;
 
         return $this;
     }

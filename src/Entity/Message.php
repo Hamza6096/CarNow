@@ -28,6 +28,10 @@ class Message
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private $date;
 
+    #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $conversation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +93,18 @@ class Message
     public function setDate(?\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getConversation(): ?Conversation
+    {
+        return $this->conversation;
+    }
+
+    public function setConversation(?Conversation $conversation): self
+    {
+        $this->conversation = $conversation;
 
         return $this;
     }

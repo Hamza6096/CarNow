@@ -54,10 +54,18 @@ class User
     #[ORM\Column(type: 'string', length: 45)]
     private $pwd;
 
+    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Conversation::class, orphanRemoval: true)]
+    private $sendersConversations;
+
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Conversation::class, orphanRemoval: true)]
+    private $recipientsConversations;
+
     public function __construct()
     {
         $this->rentings = new ArrayCollection();
         $this->cars = new ArrayCollection();
+        $this->sendersConversations = new ArrayCollection();
+        $this->recipientsConversations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,6 +261,66 @@ class User
     public function setPwd(string $pwd): self
     {
         $this->pwd = $pwd;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getSendersConversations(): Collection
+    {
+        return $this->sendersConversations;
+    }
+
+    public function addSendersConversation(Conversation $sendersConversation): self
+    {
+        if (!$this->sendersConversations->contains($sendersConversation)) {
+            $this->sendersConversations[] = $sendersConversation;
+            $sendersConversation->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSendersConversation(Conversation $sendersConversation): self
+    {
+        if ($this->sendersConversations->removeElement($sendersConversation)) {
+            // set the owning side to null (unless already changed)
+            if ($sendersConversation->getSender() === $this) {
+                $sendersConversation->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getRecipientsConversations(): Collection
+    {
+        return $this->recipientsConversations;
+    }
+
+    public function addRecipientsConversation(Conversation $recipientsConversation): self
+    {
+        if (!$this->recipientsConversations->contains($recipientsConversation)) {
+            $this->recipientsConversations[] = $recipientsConversation;
+            $recipientsConversation->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipientsConversation(Conversation $recipientsConversation): self
+    {
+        if ($this->recipientsConversations->removeElement($recipientsConversation)) {
+            // set the owning side to null (unless already changed)
+            if ($recipientsConversation->getRecipient() === $this) {
+                $recipientsConversation->setRecipient(null);
+            }
+        }
 
         return $this;
     }
