@@ -18,6 +18,9 @@ class Energy
     #[ORM\OneToMany(mappedBy: 'energy', targetEntity: Car::class)]
     private $car;
 
+    #[ORM\Column(type: 'string', length: 45)]
+    private $nameEnergy;
+
     public function __construct()
     {
         $this->car = new ArrayCollection();
@@ -54,6 +57,18 @@ class Energy
                 $car->setEnergy(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNameEnergy(): ?string
+    {
+        return $this->nameEnergy;
+    }
+
+    public function setNameEnergy(string $nameEnergy): self
+    {
+        $this->nameEnergy = $nameEnergy;
 
         return $this;
     }

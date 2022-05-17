@@ -18,6 +18,9 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Car::class)]
     private $car;
 
+    #[ORM\Column(type: 'string', length: 45)]
+    private $nameCategory;
+
     public function __construct()
     {
         $this->car = new ArrayCollection();
@@ -54,6 +57,18 @@ class Category
                 $car->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNameCategory(): ?string
+    {
+        return $this->nameCategory;
+    }
+
+    public function setNameCategory(string $nameCategory): self
+    {
+        $this->nameCategory = $nameCategory;
 
         return $this;
     }

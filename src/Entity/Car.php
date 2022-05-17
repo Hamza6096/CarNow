@@ -33,6 +33,30 @@ class Car
     #[ORM\JoinColumn(nullable: false)]
     private $owner;
 
+    #[ORM\Column(type: 'string', length: 45)]
+    private $brand;
+
+    #[ORM\Column(type: 'string', length: 45)]
+    private $model;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private $matriculation;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $matriculationDate;
+
+    #[ORM\Column(type: 'integer')]
+    private $nbSeats;
+
+    #[ORM\Column(type: 'integer')]
+    private $nbDoors;
+
+    #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
+    private $dailyPrice;
+
+    #[ORM\Column(type: 'text')]
+    private $description;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -136,6 +160,102 @@ class Car
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(string $brand): self
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    public function setModel(string $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getMatriculation(): ?string
+    {
+        return $this->matriculation;
+    }
+
+    public function setMatriculation(string $matriculation): self
+    {
+        $this->matriculation = $matriculation;
+
+        return $this;
+    }
+
+    public function getMatriculationDate(): ?\DateTimeImmutable
+    {
+        return $this->matriculationDate;
+    }
+
+    public function setMatriculationDate(\DateTimeImmutable $matriculationDate): self
+    {
+        $this->matriculationDate = $matriculationDate;
+
+        return $this;
+    }
+
+    public function getNbSeats(): ?int
+    {
+        return $this->nbSeats;
+    }
+
+    public function setNbSeats(int $nbSeats): self
+    {
+        $this->nbSeats = $nbSeats;
+
+        return $this;
+    }
+
+    public function getNbDoors(): ?int
+    {
+        return $this->nbDoors;
+    }
+
+    public function setNbDoors(int $nbDoors): self
+    {
+        $this->nbDoors = $nbDoors;
+
+        return $this;
+    }
+
+    public function getDailyPrice(): ?string
+    {
+        return $this->dailyPrice;
+    }
+
+    public function setDailyPrice(string $dailyPrice): self
+    {
+        $this->dailyPrice = $dailyPrice;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
