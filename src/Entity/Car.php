@@ -30,7 +30,7 @@ class Car
     private $rentings;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cars')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $owner;
 
     #[ORM\Column(type: 'string', length: 45)]
@@ -42,7 +42,7 @@ class Car
     #[ORM\Column(type: 'string', length: 10)]
     private $matriculation;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'date')]
     private $matriculationDate;
 
     #[ORM\Column(type: 'integer')]
