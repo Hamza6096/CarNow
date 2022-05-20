@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Renting index{% endblock %}
+
+{% block body %}
+    <h1>Renting index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>RentValidate</th>
+                <th>PaymentDate</th>
+                <th>Amout</th>
+                <th>TypeOfPayment</th>
+                <th>PlannedDuration</th>
+                <th>ActualDuration</th>
+                <th>DailyPrice</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for renting in rentings %}
+            <tr>
+                <td>{{ renting.id }}</td>
+                <td>{{ renting.start ? renting.start|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ renting.end ? renting.end|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ renting.rentValidate ? 'Yes' : 'No' }}</td>
+                <td>{{ renting.paymentDate ? renting.paymentDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ renting.amout }}</td>
+                <td>{{ renting.typeOfPayment }}</td>
+                <td>{{ renting.plannedDuration ? renting.plannedDuration|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ renting.actualDuration ? renting.actualDuration|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ renting.dailyPrice }}</td>
+                <td>
+                    <a href="{{ path('app_renting_show', {'id': renting.id}) }}">show</a>
+                    <a href="{{ path('app_renting_edit', {'id': renting.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_renting_new') }}">Create new</a>
+{% endblock %}

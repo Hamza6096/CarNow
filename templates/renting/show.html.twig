@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Renting{% endblock %}
+
+{% block body %}
+    <h1>Renting</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ renting.id }}</td>
+            </tr>
+            <tr>
+                <th>Start</th>
+                <td>{{ renting.start ? renting.start|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>{{ renting.end ? renting.end|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RentValidate</th>
+                <td>{{ renting.rentValidate ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PaymentDate</th>
+                <td>{{ renting.paymentDate ? renting.paymentDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Amout</th>
+                <td>{{ renting.amout }}</td>
+            </tr>
+            <tr>
+                <th>TypeOfPayment</th>
+                <td>{{ renting.typeOfPayment }}</td>
+            </tr>
+            <tr>
+                <th>PlannedDuration</th>
+                <td>{{ renting.plannedDuration ? renting.plannedDuration|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ActualDuration</th>
+                <td>{{ renting.actualDuration ? renting.actualDuration|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DailyPrice</th>
+                <td>{{ renting.dailyPrice }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('renting_index') }}">back to list</a>
+
+    <a href="{{ path('renting_edit', {'id': renting.id}) }}">edit</a>
+
+    {{ include('renting/_delete_form.html.twig') }}
+{% endblock %}
