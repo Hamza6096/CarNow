@@ -15,14 +15,6 @@ class Conversation
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sendersConversations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $sender;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'recipientsConversations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $recipient;
-
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class, orphanRemoval: true)]
     private $messages;
 

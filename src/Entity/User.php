@@ -3,242 +3,30 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Renting::class, orphanRemoval: true)]
-    private $rentings;
-
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Car::class, orphanRemoval: true)]
-    private $cars;
-
-    #[ORM\Column(type: 'string', length: 45)]
-    private $name;
-
-    #[ORM\Column(type: 'string', length: 45)]
-    private $firstname;
-
-    #[ORM\Column(type: 'string', length: 10)]
-    private $phoneNumber;
-
-    #[ORM\Column(type: 'string', length: 45)]
-    private $country;
-
-    #[ORM\Column(type: 'string', length: 10)]
-    private $zipCode;
-
-    #[ORM\Column(type: 'string', length: 45)]
-    private $city;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $address;
-
-    #[ORM\Column(type: 'string', length: 45, nullable: true)]
-    private $role;
-
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $dateOfBirth;
-
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
-    #[ORM\Column(type: 'string', length: 45)]
-    private $pwd;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
 
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Conversation::class, orphanRemoval: true)]
-    private $sendersConversations;
-
-    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Conversation::class, orphanRemoval: true)]
-    private $recipientsConversations;
-
-    public function __construct()
-    {
-        $this->rentings = new ArrayCollection();
-        $this->cars = new ArrayCollection();
-        $this->sendersConversations = new ArrayCollection();
-        $this->recipientsConversations = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'string')]
+    private $password;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Renting>
-     */
-    public function getRentings(): Collection
-    {
-        return $this->rentings;
-    }
-
-    public function addRenting(Renting $renting): self
-    {
-        if (!$this->rentings->contains($renting)) {
-            $this->rentings[] = $renting;
-            $renting->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRenting(Renting $renting): self
-    {
-        if ($this->rentings->removeElement($renting)) {
-            // set the owning side to null (unless already changed)
-            if ($renting->getUser() === $this) {
-                $renting->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Car>
-     */
-    public function getCars(): Collection
-    {
-        return $this->cars;
-    }
-
-    public function addCar(Car $car): self
-    {
-        if (!$this->cars->contains($car)) {
-            $this->cars[] = $car;
-            $car->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCar(Car $car): self
-    {
-        if ($this->cars->removeElement($car)) {
-            // set the owning side to null (unless already changed)
-            if ($car->getOwner() === $this) {
-                $car->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getZipCode(): ?string
-    {
-        return $this->zipCode;
-    }
-
-    public function setZipCode(string $zipCode): self
-    {
-        $this->zipCode = $zipCode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(?string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    public function getDateOfBirth(): ?\DateTimeImmutable
-    {
-        return $this->dateOfBirth;
-    }
-
-    public function setDateOfBirth(\DateTimeImmutable $dateOfBirth): self
-    {
-        $this->dateOfBirth = $dateOfBirth;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -253,75 +41,56 @@ class User
         return $this;
     }
 
-    public function getPwd(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->pwd;
+        return (string) $this->email;
     }
 
-    public function setPwd(string $pwd): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->pwd = $pwd;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Conversation>
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getSendersConversations(): Collection
+    public function getPassword(): string
     {
-        return $this->sendersConversations;
+        return $this->password;
     }
 
-    public function addSendersConversation(Conversation $sendersConversation): self
+    public function setPassword(string $password): self
     {
-        if (!$this->sendersConversations->contains($sendersConversation)) {
-            $this->sendersConversations[] = $sendersConversation;
-            $sendersConversation->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSendersConversation(Conversation $sendersConversation): self
-    {
-        if ($this->sendersConversations->removeElement($sendersConversation)) {
-            // set the owning side to null (unless already changed)
-            if ($sendersConversation->getSender() === $this) {
-                $sendersConversation->setSender(null);
-            }
-        }
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Conversation>
+     * @see UserInterface
      */
-    public function getRecipientsConversations(): Collection
+    public function eraseCredentials()
     {
-        return $this->recipientsConversations;
-    }
-
-    public function addRecipientsConversation(Conversation $recipientsConversation): self
-    {
-        if (!$this->recipientsConversations->contains($recipientsConversation)) {
-            $this->recipientsConversations[] = $recipientsConversation;
-            $recipientsConversation->setRecipient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipientsConversation(Conversation $recipientsConversation): self
-    {
-        if ($this->recipientsConversations->removeElement($recipientsConversation)) {
-            // set the owning side to null (unless already changed)
-            if ($recipientsConversation->getRecipient() === $this) {
-                $recipientsConversation->setRecipient(null);
-            }
-        }
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

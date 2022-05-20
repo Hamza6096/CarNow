@@ -17,10 +17,6 @@ class Renting
     #[ORM\JoinColumn(nullable: false)]
     private $car;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'rentings')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;
-
     #[ORM\Column(type: 'datetime')]
     private $start;
 

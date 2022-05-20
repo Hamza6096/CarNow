@@ -29,10 +29,6 @@ class Car
     #[ORM\OneToMany(mappedBy: 'car', targetEntity: Renting::class, orphanRemoval: true)]
     private $rentings;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cars')]
-    #[ORM\JoinColumn(nullable: true)]
-    private $owner;
-
     #[ORM\Column(type: 'string', length: 45)]
     private $brand;
 
@@ -155,18 +151,6 @@ class Car
                 $renting->setCar(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): self
-    {
-        $this->owner = $owner;
 
         return $this;
     }

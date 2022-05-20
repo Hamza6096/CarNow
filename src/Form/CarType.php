@@ -23,7 +23,6 @@ class CarType extends AbstractType
             ->add('data')
             ->add('category')
             ->add('energy')
-            ->add('owner')
             ->add('equipment')
         ;
     }
