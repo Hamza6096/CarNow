@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Car{% endblock %}
+
+{% block body %}
+    <h1>Car</h1>
+
+    <div class="{{ car.data }}" style="width: 18rem;">
+        <img src="{{ car.data }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
+            <p class="card-text">{{ car.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Prix journalier: {{ car.dailyPrice }}€</li>
+            <li class="list-group-item">
+                Année: {{ car.matriculationDate ? car.matriculationDate|date('Y-m-d H:i:s') : '' }}</li>
+            <li class="list-group-item">Nombre de portes: {{ car.nbSeats }}</li>
+            <li class="list-group-item">Nombre de places: {{ car.nbDoors }}</li>
+            <li class="list-group-item">Categorie: {{ car.category }}</li>
+            <li class="list-group-item">Carburant: {{ car.energy }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{{ path('car_index') }}" class="btn btn-primary">back to list</a>
+
+            <a href="{{ path('car_edit', {'id': car.id}) }}" class="btn btn-primary">edit</a>
+
+            <a class="btn btn-danger">{{ include('car/_delete_form.html.twig') }}</a>
+
+        </div>
+    </div>
+
+
+    {#    <table class="table"> #}
+    {#        <tbody> #}
+    {#            <tr> #}
+    {#                <th>Id</th> #}
+    {#                <td>{{ car.id }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>Brand</th> #}
+    {#                <td>{{ car.brand }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>Model</th> #}
+    {#                <td>{{ car.model }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>Matriculation</th> #}
+    {#                <td>{{ car.matriculation }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>MatriculationDate</th> #}
+    {#                <td>{{ car.matriculationDate ? car.matriculationDate|date('Y-m-d H:i:s') : '' }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>NbSeats</th> #}
+    {#                <td>{{ car.nbSeats }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>NbDoors</th> #}
+    {#                <td>{{ car.nbDoors }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>DailyPrice</th> #}
+    {#                <td>{{ car.dailyPrice }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>Description</th> #}
+    {#                <td>{{ car.description }}</td> #}
+    {#            </tr> #}
+    {#            <tr> #}
+    {#                <th>Data</th> #}
+    {#                <td>{{ car.data }}</td> #}
+    {#            </tr> #}
+    {#        </tbody> #}
+    {#    </table> #}
+
+    {#    <a href="{{ path('app_car_index') }}">back to list</a> #}
+
+    {#    <a href="{{ path('app_car_edit', {'id': car.id}) }}">edit</a> #}
+
+    {#    {{ include('car/_delete_form.html.twig') }} #}
+{% endblock %}

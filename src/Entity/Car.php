@@ -207,12 +207,12 @@ class Car
         return $this;
     }
 
-    public function getMatriculationDate(): ?\DateTimeImmutable
+    public function getMatriculationDate(): ?\DateTime
     {
         return $this->matriculationDate;
     }
 
-    public function setMatriculationDate(\DateTimeImmutable $matriculationDate): self
+    public function setMatriculationDate(\DateTime $matriculationDate): self
     {
         $this->matriculationDate = $matriculationDate;
 
@@ -301,5 +301,10 @@ class Car
         $this->data = $data;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->id;
     }
 }
