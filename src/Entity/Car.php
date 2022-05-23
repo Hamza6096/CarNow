@@ -59,6 +59,9 @@ class Car
     #[ORM\Column(type: 'string', length: 255)]
     private $data;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cars')]
+    private $owner;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -290,5 +293,17 @@ class Car
     public function __toString()
     {
         return $this->id;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
     }
 }

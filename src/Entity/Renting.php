@@ -44,6 +44,9 @@ class Renting
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
     private $dailyPrice;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'rentings')]
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
