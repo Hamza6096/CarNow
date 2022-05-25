@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -54,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $createdat;
 
     #[ORM\Column(type: 'boolean')]
-    private $is_verified = false;
+    private $isVerified = false;
 
 
     public function __construct()
@@ -240,17 +241,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getIsVerified(): ?bool
-    {
-        return $this->is_verified;
 
-    }
-
-    public function setIsVerified(bool $is_verified): self
+    public function setIsVerified(bool $setIsVerified): self
     {
-        $this->is_verified = $is_verified;
+        $this->isVerified = $setIsVerified;
 
         return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
     }
 
 }
