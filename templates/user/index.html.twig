@@ -1,20 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.user.name }} {{ app.user.firstname }}{% endblock %}
+{% block title %}User index{% endblock %}
 
 {% block body %}
-    <div class="card text-white bg-dark mb-3 mt-5" style="max-width: 20rem;">
-        <div class="card-header">Mes informations</div>
-        <div class="card-body">
-            <h4 class="card-title">{{ app.user.name }} {{ app.user.firstname }}</h4>
-            <p class="card-text">Emai {{ app.user.email }}</p>
-            <a href="#" class="btn btn-outline-success">Modifier le profil</a>
-            <a href="#" class="btn btn-outline-success">Modifier le mot de passe</a>
-        </div>
-    </div>
-    <div class="card text-white bg-dark mb-3 mt-5" style="max-width: 20rem;">
-        <div class="card-header">Annonce de {{ app.user.firstname }} {{ app.user.name }}</div>
-        <div class="card-body">
-            <p class="card-text">TO DO</p>
-    </div>
+    <h1>User index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Firstname</th>
+                <th>Phonenumber</th>
+                <th>Country</th>
+                <th>Zipcode</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Dateofbirth</th>
+                <th>Createdat</th>
+                <th>IsVerified</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.phonenumber }}</td>
+                <td>{{ user.country }}</td>
+                <td>{{ user.zipcode }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.dateofbirth ? user.dateofbirth|date('Y-m-d') : '' }}</td>
+                <td>{{ user.createdat ? user.createdat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_new') }}">Create new</a>
 {% endblock %}

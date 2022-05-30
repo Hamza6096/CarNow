@@ -32,7 +32,7 @@
                         <a class="nav-link active" href="/logout">Se Déconnecter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/user">Mon compte</a>
+                        <a class="nav-link active" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon compte</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Des question ?</a>
