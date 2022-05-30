@@ -10,8 +10,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
                 <h6 class="card-title">Prix journalier {{ car.dailyPrice }}€</h6>
-                <a href="{{ path('car_show', {'id': car.id}) }}" class="btn btn-primary">Voir</a>
-                <a href="{{ path('renting_new', {'id': car.id}) }}" class="btn btn-primary">Louer</a>
+                <a class="btn btn-outline-success" href="{{ path('car_show', {'id': car.id}) }}">Voir</a>
+                <a class="btn btn-outline-success" href="{{ path('renting_new', {'id': car.id}) }}">Louer</a>
 
             </div>
         </div>

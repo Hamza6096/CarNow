@@ -21,11 +21,11 @@
             <li class="list-group-item">Carburant: {{ car.energy }}</li>
         </ul>
         <div class="card-body">
-            <a href="{{ path('car_index') }}" class="btn btn-primary">back to list</a>
+            <a class="btn btn-outline-success" href="{{ path('car_index') }}">back to list</a>
 
-            <a href="{{ path('car_edit', {'id': car.id}) }}" class="btn btn-primary">edit</a>
+            <a class="btn btn-outline-success" href="{{ path('car_edit', {'id': car.id}) }}">edit</a>
 
-            <a class="btn btn-danger">{{ include('car/_delete_form.html.twig') }}</a>
+            <a class="btn btn-outline-danger" class="btn btn-danger">{{ include('car/_delete_form.html.twig') }}</a>
 
         </div>
     </div>
