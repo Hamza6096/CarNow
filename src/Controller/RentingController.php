@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Renting;
 use App\Form\RentingType;
+use App\Repository\CarRepository;
 use App\Repository\RentingRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,17 +23,24 @@ class RentingController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'renting_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, RentingRepository $rentingRepository): Response
+    #[Route('/new/car{idCar}/user{idUser}', name: 'renting_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, RentingRepository $rentingRepository, CarRepository $carRepository, UserRepository $userRepository): Response
     {
+        $idCar = $request->get('idCar');
+        $car = $carRepository->find($idCar);
+        $idUser = $request->get('idUser');
+        $user = $userRepository->find($idUser);
         $renting = new Renting();
         $form = $this->createForm(RentingType::class, $renting);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $renting->setRentValidate(1);
+            $renting->setCar($car);
+            $renting->setUser($user);
             $rentingRepository->add($renting, true);
 
-            return $this->redirectToRoute('app_renting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('renting_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('renting/new.html.twig', [
@@ -57,7 +66,7 @@ class RentingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $rentingRepository->add($renting, true);
 
-            return $this->redirectToRoute('app_renting_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('renting_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('renting/edit.html.twig', [
@@ -73,6 +82,6 @@ class RentingController extends AbstractController
             $rentingRepository->remove($renting, true);
         }
 
-        return $this->redirectToRoute('app_renting_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('renting_index', [], Response::HTTP_SEE_OTHER);
     }
 }
