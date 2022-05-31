@@ -38,7 +38,7 @@
                         <a class="nav-link" href="#">Des question ?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/car/new">Louer ma voiture</a>
+                        <a class="nav-link" href="{{ path('car_new', {'idUser': app.user.id}) }}">Louer ma voiture</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
@@ -48,7 +48,7 @@
                         <a class="nav-link" href="#">Des question ?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/car/new">Louer ma voiture</a>
+                        <a class="nav-link" href="/login">Louer ma voiture</a>
                     </li>
                 {% endif %}
             </ul>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Car;
 use App\Form\CarType;
 use App\Repository\CarRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +22,17 @@ class CarController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'car_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CarRepository $carRepository): Response
+    #[Route('/new/user{idUser}', name: 'car_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CarRepository $carRepository, UserRepository $userRepository): Response
     {
+        $idUser = $request->get('idUser');
+        $owner = $userRepository->find($idUser);
         $car = new Car();
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $car->setOwner($owner);
             $carRepository->add($car, true);
 
             return $this->redirectToRoute('car_index', [], Response::HTTP_SEE_OTHER);
