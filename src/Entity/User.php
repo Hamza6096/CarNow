@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $address;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'date')]
     private $dateofbirth;
 
     #[ORM\Column(type: 'datetime_immutable', options: ['DEFAULT' => 'CURRENT_TIMESTAMP'])]
@@ -224,12 +224,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDateofbirth(): ?\DateTimeImmutable
+    public function getDateofbirth(): ?\DateTime
     {
         return $this->dateofbirth;
     }
 
-    public function setDateofbirth(\DateTimeImmutable $dateofbirth): self
+    public function setDateofbirth(\DateTime $dateofbirth): self
     {
         $this->dateofbirth = $dateofbirth;
 
