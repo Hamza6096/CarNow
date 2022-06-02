@@ -62,12 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Car::class)]
     private $cars;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Renting::class)]
+    private $rentings;
+
 
     public function __construct()
     {
         $this->createdat = new \DateTimeImmutable();
         $this->owner = new ArrayCollection();
         $this->cars = new ArrayCollection();
+        $this->rentings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +294,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($car->getOwner() === $this) {
                 $car->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Renting>
+     */
+    public function getRentings(): Collection
+    {
+        return $this->rentings;
+    }
+
+    public function addRenting(Renting $renting): self
+    {
+        if (!$this->rentings->contains($renting)) {
+            $this->rentings[] = $renting;
+            $renting->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRenting(Renting $renting): self
+    {
+        if ($this->rentings->removeElement($renting)) {
+            // set the owning side to null (unless already changed)
+            if ($renting->getUser() === $this) {
+                $renting->setUser(null);
             }
         }
 
