@@ -30,7 +30,6 @@ class CarType extends AbstractType
             ->add('nbDoors', TextType::class, ['label' => 'Nombre de porte'])
             ->add('dailyPrice', MoneyType::class,['label' => 'Prix Journalier'])
             ->add('description', TextType::class, ['label' => 'Description'])
-            ->add('data')
             ->add('category')
             ->add('energy')
             ->add('equipment')

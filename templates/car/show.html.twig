@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Car</h1>
 
-    <div class="{{ car.image }}">
-        <img src="{{ car.image }}" class="card-img-top" alt="...">
+    <div class="card" style="width: 35rem;">
+        <img src="{{ asset('uploads/cars/' ~ car.image) }}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
             <p class="card-text">{{ car.description }}</p>

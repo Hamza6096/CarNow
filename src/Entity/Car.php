@@ -56,8 +56,6 @@ class Car
     #[ORM\ManyToMany(targetEntity: Equipment::class, inversedBy: 'cars')]
     private $equipment;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $data;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cars')]
     private $owner;
@@ -277,18 +275,6 @@ class Car
     public function removeEquipment(Equipment $equipment): self
     {
         $this->equipment->removeElement($equipment);
-
-        return $this;
-    }
-
-    public function getData(): ?string
-    {
-        return $this->data;
-    }
-
-    public function setData(string $data): self
-    {
-        $this->data = $data;
 
         return $this;
     }
