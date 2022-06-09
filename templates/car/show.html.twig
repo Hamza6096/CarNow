@@ -15,7 +15,7 @@
             <a class="btn btn-outline-success" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
             <li class="list-group-item">Prix journalier: {{ car.dailyPrice }}€</li>
             <li class="list-group-item">
-                Année: {{ car.matriculationDate ? car.matriculationDate|date('Y-m-d H:i:s') : '' }}</li>
+                Année: {{ car.matriculationDate ? car.matriculationDate|date('Y-m-d') : '' }}</li>
             <li class="list-group-item">Nombre de portes: {{ car.nbSeats }}</li>
             <li class="list-group-item">Nombre de places: {{ car.nbDoors }}</li>
             <li class="list-group-item">Categorie: {{ car.category }}</li>

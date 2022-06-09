@@ -7,66 +7,66 @@
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
+{#        <tr>#}
+{#            <th>Id</th>#}
+{#            <td>{{ user.id }}</td>#}
+{#        </tr>#}
         <tr>
             <th>Email</th>
             <td>{{ user.email }}</td>
         </tr>
-        {#            <tr> #}
-        {#                <th>Roles</th> #}
-        {#                <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
-        {#            </tr> #}
+{#        <tr>#}
+{#            <th>Roles</th>#}
+{#            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Password</th>#}
+{#            <td>{{ user.password }}</td>#}
+{#        </tr>#}
         <tr>
-            <th>Password</th>
-            <td>{{ user.password }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
+            <th>Nom</th>
             <td>{{ user.name }}</td>
         </tr>
         <tr>
-            <th>Firstname</th>
+            <th>Prénom</th>
             <td>{{ user.firstname }}</td>
         </tr>
         <tr>
-            <th>Phonenumber</th>
+            <th>Numéro</th>
             <td>{{ user.phonenumber }}</td>
         </tr>
         <tr>
-            <th>Country</th>
+            <th>Pays</th>
             <td>{{ user.country }}</td>
         </tr>
         <tr>
-            <th>Zipcode</th>
+            <th>Code Postal</th>
             <td>{{ user.zipcode }}</td>
         </tr>
         <tr>
-            <th>City</th>
+            <th>Ville</th>
             <td>{{ user.city }}</td>
         </tr>
         <tr>
-            <th>Address</th>
+            <th>Adresse</th>
             <td>{{ user.address }}</td>
         </tr>
         <tr>
-            <th>Dateofbirth</th>
+            <th>Date de naissance</th>
             <td>{{ user.dateofbirth ? user.dateofbirth|date('Y-m-d') : '' }}</td>
         </tr>
         <tr>
-            <th>Createdat</th>
+            <th>Date d'inscription</th>
             <td>{{ user.createdat ? user.createdat|date('Y-m-d H:i:s') : '' }}</td>
         </tr>
         <tr>
-            <th>IsVerified</th>
+            <th>Utilisateur vérifié</th>
             <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
         </tr>
         </tbody>
     </table>
     <div class="col mb-3">
-        <a class="btn btn-outline-success" href="{{ path('app_user_index') }}">Retour à la liste</a>
+        {#        <a class="btn btn-outline-success" href="{{ path('app_user_index') }}">Retour à la liste</a> #}
 
         <a class="btn btn-outline-success" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
         <a class="btn btn-outline-danger" href="{{ path('app_forgot_password_request') }}">Modifier mot de passe</a>
@@ -90,20 +90,20 @@
         {% endfor %}
     </div>
 
-{#    <h1>Mes locations ({{ app.user.rentings|length }})</h1>#}
-{#    <div class="row p-3 my-3 border">#}
+    {#    <h1>Mes locations ({{ app.user.rentings|length }})</h1> #}
+    {#    <div class="row p-3 my-3 border"> #}
 
-{#        {% for renting in user.rentings %}#}
+    {#        {% for renting in user.rentings %} #}
 
-{#            <div class="card col" style="width: 18rem;">#}
-{#                <div class="card-body">#}
-{#                    <h5 class="card-title">Montant: {{ renting.amout }}€ <span></span></h5>#}
-{#                    <h6 class="card-title">Du: {{ renting.start.format('d-m-Y')}} Au: {{ renting.end.format('d-m-Y')}}</h6>#}
-{#                    <h6 class="card-title"> {{ renting.car.id }}</h6>#}
-{#                </div>#}
-{#            </div>#}
+    {#            <div class="card col" style="width: 18rem;"> #}
+    {#                <div class="card-body"> #}
+    {#                    <h5 class="card-title">Montant: {{ renting.amout }}€ <span></span></h5> #}
+    {#                    <h6 class="card-title">Du: {{ renting.start.format('d-m-Y')}} Au: {{ renting.end.format('d-m-Y')}}</h6> #}
+    {#                    <h6 class="card-title"> {{ renting.car.id }}</h6> #}
+    {#                </div> #}
+    {#            </div> #}
 
 
-{#        {% endfor %}#}
-{#    </div>#}
+    {#        {% endfor %} #}
+    {#    </div> #}
 {% endblock %}

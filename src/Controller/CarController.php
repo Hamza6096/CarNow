@@ -82,12 +82,39 @@ class CarController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'car_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Car $car, CarRepository $carRepository): Response
+    public function edit(Request $request, Car $car, CarRepository $carRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $brochureFileEdit = $form->get('photo')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($brochureFileEdit) {
+                $originalFilename = pathinfo($brochureFileEdit->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFileEdit->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFileEdit->move(
+                        $this->getParameter('car_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    $this->addFlash('danger', 'erreur upload');
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $car->setImage($newFilename);
+            }
+
             $carRepository->add($car, true);
 
             return $this->redirectToRoute('car_index', [], Response::HTTP_SEE_OTHER);
