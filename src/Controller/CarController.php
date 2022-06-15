@@ -135,4 +135,9 @@ class CarController extends AbstractController
 
         return $this->redirectToRoute('car_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}', name: 'car_delete', methods: ['POST'])]
+    public function deletImage(){
+
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Car;
+use App\Entity\Equipment;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -32,7 +34,11 @@ class CarType extends AbstractType
             ->add('description', TextType::class, ['label' => 'Description'])
             ->add('category')
             ->add('energy')
-            ->add('equipment')
+            ->add('equipment', EntityType::class, [
+                'expanded' => true,
+                'multiple' => true,
+                'class' => Equipment::class,
+            ])
             ->add('photo', FileType::class, [
                 'label' => 'Photo du béhicule (Fichier image)',
 

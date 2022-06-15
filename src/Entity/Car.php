@@ -54,6 +54,7 @@ class Car
     private $description;
 
     #[ORM\ManyToMany(targetEntity: Equipment::class, inversedBy: 'cars')]
+    #[ORM\JoinTable(name: "car_equipment")]
     private $equipment;
 
 
