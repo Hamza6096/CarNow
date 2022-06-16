@@ -72,6 +72,6 @@ class Equipment
 
     public function __toString()
     {
-        return $this->nameEquipment;
+        return $this->nameEquipment . $this->id;
     }
 }

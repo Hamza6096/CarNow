@@ -282,7 +282,7 @@ class Car
 
     public function __toString()
     {
-        return $this->id;
+        return $this->id . $this->equipment;
     }
 
     public function getOwner(): ?User
