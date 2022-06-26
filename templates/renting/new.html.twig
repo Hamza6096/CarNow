@@ -6,6 +6,6 @@
     <h1>Create new Renting</h1>
 
     {{ include('renting/_form.html.twig') }}
-
+    <a class="btn btn-outline-success" href="{{ path('payment', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
     <a href="{{ path('renting_index') }}">back to list</a>
 {% endblock %}

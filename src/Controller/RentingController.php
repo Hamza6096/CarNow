@@ -46,8 +46,38 @@ class RentingController extends AbstractController
         return $this->renderForm('renting/new.html.twig', [
             'renting' => $renting,
             'form' => $form,
+            'car' => $car
         ]);
     }
+
+
+    #[Route('/payment/car{idCar}/user{idUser}', name: 'payment', methods: ['GET', 'POST'])]
+    public function payment(Request $request, RentingRepository $rentingRepository, CarRepository $carRepository, UserRepository $userRepository): Response
+    {
+        $idCar = $request->get('idCar');
+        $car = $carRepository->find($idCar);
+        $idUser = $request->get('idUser');
+        $user = $userRepository->find($idUser);
+        $renting = new Renting();
+        $form = $this->createForm(RentingType::class, $renting);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $renting->setRentValidate(1);
+            $renting->setCar($car);
+            $renting->setUser($user);
+            $rentingRepository->add($renting, true);
+
+            return $this->redirectToRoute('renting_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('renting/payment.html.twig', [
+            'renting' => $renting,
+            'form' => $form,
+            'car' => $car
+        ]);
+    }
+
 
     #[Route('/{id}', name: 'renting_show', methods: ['GET'])]
     public function show(Renting $renting): Response
