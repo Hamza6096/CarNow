@@ -15,6 +15,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/renting')]
 class RentingController extends AbstractController
 {
+
+        public function __construct(ManagerRegistry $doctrine) {
+        $this->doctrine = $doctrine;
+    }
+
+    #[Route('/', name: 'car_index', methods: ['GET'])]
+    public function index(Request $request, CarRepository $carRepository): Response
+    {
+        $filters = $request->query->all();
+        return $this->render('car/index.html.twig', [
+            'cars' => $carRepository->filter($filters),
+        ]);
+    }
     #[Route('/', name: 'renting_index', methods: ['GET'])]
     public function index(RentingRepository $rentingRepository): Response
     {

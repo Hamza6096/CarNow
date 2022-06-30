@@ -13,7 +13,7 @@ class Renting
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: 'rentings')]
+    #[ORM\ManyToOne(targetEntity: Car::class, inversedBy: 'rentings', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     private $car;
 

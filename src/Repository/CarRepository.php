@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Car;
+use App\Entity\Renting;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +40,8 @@ class CarRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
 
 //    /**
 //     * @return Car[] Returns an array of Car objects

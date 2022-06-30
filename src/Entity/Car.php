@@ -26,7 +26,7 @@ class Car
     #[ORM\OneToMany(mappedBy: 'car', targetEntity: Note::class, orphanRemoval: true)]
     private $notes;
 
-    #[ORM\OneToMany(mappedBy: 'car', targetEntity: Renting::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'car', targetEntity: Renting::class, orphanRemoval: true, fetch: 'EAGER')]
     private $rentings;
 
     #[ORM\Column(type: 'string', length: 45)]
