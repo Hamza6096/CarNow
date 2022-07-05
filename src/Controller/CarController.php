@@ -17,7 +17,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/car')]
 class CarController extends AbstractController
 {
-    public function __construct(ManagerRegistry $doctrine) {
+    public function __construct(ManagerRegistry $doctrine)
+    {
         $this->doctrine = $doctrine;
     }
 
@@ -29,6 +30,16 @@ class CarController extends AbstractController
             'cars' => $carRepository->filter($filters),
         ]);
     }
+
+//    #[Route('/car/{start}/{end}', name: 'car_research', methods: ['GET'])]
+//    public function research(CarRepository $carRepository, ManagerRegistry $doctrine, $start, $end): Response
+//    {
+//        $carRepository = $doctrine->getRepository(Car::class);
+//        $cars = $carRepository->filter($start, $end);
+//        return $this->render('car/index.html.twig', ['cars' => $cars]);
+//    }
+
+
 
     #[Route('/new/user{idUser}', name: 'car_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CarRepository $carRepository, UserRepository $userRepository, SluggerInterface $slugger): Response
@@ -49,7 +60,7 @@ class CarController extends AbstractController
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -103,7 +114,7 @@ class CarController extends AbstractController
                 $originalFilename = pathinfo($brochureFileEdit->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFileEdit->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFileEdit->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -135,7 +146,7 @@ class CarController extends AbstractController
     #[Route('/{id}', name: 'car_delete', methods: ['POST'])]
     public function delete(Request $request, Car $car, CarRepository $carRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$car->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $car->getId(), $request->request->get('_token'))) {
             $carRepository->remove($car, true);
         }
 
@@ -143,7 +154,8 @@ class CarController extends AbstractController
     }
 
     #[Route('/{id}', name: 'car_delete', methods: ['POST'])]
-    public function deletImage(){
+    public function deletImage()
+    {
 
     }
 }

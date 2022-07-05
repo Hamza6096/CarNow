@@ -34,6 +34,8 @@
                                         <a class="btn btn-outline-success" href="{{ path('car_show', {'id': car.id}) }}">Voir</a>
                                         {% if app.user %}
                                         <a class="btn btn-outline-success" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
+                                        {% else %}
+                                            <a class="btn btn-outline-success" href="{{ path('login') }}">Louer</a>
                                         {% endif %}
                                     </div>
                                 </div>

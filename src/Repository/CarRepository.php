@@ -42,18 +42,22 @@ class CarRepository extends ServiceEntityRepository
     }
 
     public function filter(array $filters): array
+
+//    SELECT c.id FROM car c WHERE c.id NOT IN ( SELECT r.car_id FROM renting r WHERE r.car_id = c.id AND r.start BETWEEN "2022-06-14 00:00:00" AND "2022-06-17 00:00:00" OR r.end BETWEEN "2022-06-14 00:00:00" AND "2022-06-17 00:00:00" );
     {
         $qb = $this->createQueryBuilder('c');
         if (!empty($filters['start']) && !empty($filters['end'])) {
+
             $qb->andWhere('c.id NOT IN (
                 SELECT r.car_id FROM App\Entity\Renting r
                 WHERE r.car_id = c.id
-                AND r.start <= :end
-                AND r.end >= :start
-            )');
+                AND r.start BETWEEN :start AND :end
+                OR r.end BETWEEN :start AND :end
+           )');
             $qb->setParameter('start', $filters['start']);
             $qb->setParameter('end', $filters['end']);
         }
+        //dd($qb->getQuery());
         foreach ($filters as $key => $filter) {
             if (!in_array($key, ['start', 'end'])) {
                 $qb->andWhere('c.' . $key . ' = ' . "'" . $filter . "'");
@@ -66,20 +70,7 @@ class CarRepository extends ServiceEntityRepository
     }
 
 
-//    /**
-//     * @return Car[] Returns an array of Car objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
 
 //    public function findOneBySomeField($value): ?Car
 //    {
