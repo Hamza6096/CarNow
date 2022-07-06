@@ -6,6 +6,8 @@ use App\Entity\Car;
 use App\Form\CarType;
 use App\Repository\CarRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -22,12 +24,19 @@ class CarController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     #[Route('/', name: 'car_index', methods: ['GET'])]
     public function index(Request $request, CarRepository $carRepository): Response
     {
-        $filters = $request->query->all();
+//        $filters = $request->query->all();
         return $this->render('car/index.html.twig', [
-            'cars' => $carRepository->filter($filters),
+//            'cars' => $carRepository->filter($filters),
+            'cars' => $carRepository->getPaginated((int)$request->query->get("page",1),6),
+            'totalCars' => $carRepository->countCars()
+
         ]);
     }
 

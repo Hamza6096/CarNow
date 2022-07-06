@@ -3,26 +3,30 @@
 {% block title %}Car index{% endblock %}
 
 {% block body %}
-    <h1>Car index</h1>
-    <main>
 
-        <section class="py-5 text-center container border">
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Album example</h1>
-                    <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-                    <p>
-                        <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                    </p>
-                </div>
-            </div>
-        </section>
+    <h1>Car index</h1>
+    <main class="d-flex">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <span class="fs-4">Sidebar</span>
+            </a>
+            <hr>
+            <ul class="dropdown-menu dropdown-menu-dark position-static d-grid gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px">
+                <p class="text-center">Type de véhicule</p>
+                <li><a class="dropdown-item rounded-2" href="#">Citadines</a></li>
+                <li><a class="dropdown-item rounded-2" href="#">Utilitaires</a></li>
+                <li><a class="dropdown-item rounded-2" href="#">4X4</a></li>
+                <li><a class="dropdown-item rounded-2" href="#">Berline</a></li>
+            </ul>
+
+        </div>
+
         <div class="album py-5 bg-light">
+
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-around">
         {% for car in cars %}
-
                     <div class="col">
                         <div class="card shadow-sm">
                             <a href="{{ path('car_show', {'id': car.id}) }}"><img src="{{ asset('uploads/cars/' ~ car.image) }}" class="card-img-top" alt="..."></a>
@@ -42,10 +46,18 @@
                             </div>
                         </div>
                     </div>
-
         {% endfor %}
                 </div>
             </div>
         </div>
     </main>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-around my-1">
+    <nav class="col">
+        <ul class="pagination justify-content-center">
+            {% for i in 1..((totalCars/6)|round(0, 'ceil'))%}
+                <li class="page-item  "><a class="page-link link-dark" href="{{ path("car_index", {page: i}) }}">{{ i }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
 {% endblock %}
