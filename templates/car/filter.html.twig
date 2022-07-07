@@ -1,0 +1,14 @@
+{{ form_start(form, {attr: {class: 'filter'}}) }}
+{{ form_row(form.q) }}
+
+<h4>Catégories</h4>
+{{ form_row(form.categories) }}
+
+<div class="row">
+    {{ form_row(form.min) }}
+    {{ form_row(form.max) }}
+</div>
+
+<button type="submit" class="btn btn-outline-light w-100 ">Filter</button>
+
+{{ form_end(form) }}

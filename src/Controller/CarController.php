@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Car;
 use App\Form\CarType;
+use App\Form\SearchType;
+use App\Model\SearchData;
 use App\Repository\CarRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -29,24 +31,28 @@ class CarController extends AbstractController
      * @throws NoResultException
      */
     #[Route('/', name: 'car_index', methods: ['GET'])]
-    public function index(Request $request, CarRepository $carRepository): Response
+    public function index(CarRepository $carRepository): Response
     {
-//        $filters = $request->query->all();
+        $data = new SearchData();
+        $form = $this->createForm(SearchType::class, $data);
+        $carsSearch = $carRepository->findSearch();
         return $this->render('car/index.html.twig', [
-//            'cars' => $carRepository->filter($filters),
-            'cars' => $carRepository->getPaginated((int)$request->query->get("page",1),6),
-            'totalCars' => $carRepository->countCars()
-
+            'cars' => $carRepository->findAll(),
+            'carSearch' =>$carRepository,
+            'form' => $form->createView()
         ]);
     }
 
-//    #[Route('/car/{start}/{end}', name: 'car_research', methods: ['GET'])]
-//    public function research(CarRepository $carRepository, ManagerRegistry $doctrine, $start, $end): Response
+//    // Route pour la recherche pas date
+//    #[Route('/', name: 'car_index', methods: ['GET'])]
+//    public function index(Request $request, CarRepository $carRepository): Response
 //    {
-//        $carRepository = $doctrine->getRepository(Car::class);
-//        $cars = $carRepository->filter($start, $end);
-//        return $this->render('car/index.html.twig', ['cars' => $cars]);
+//        $filters = $request->query->all();
+//        return $this->render('car/index.html.twig', [
+//            'cars' => $carRepository->filter($filters),
+//        ]);
 //    }
+
 
 
 

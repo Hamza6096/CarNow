@@ -1,0 +1,19 @@
+<div class="col">
+    <div class="card shadow-sm">
+        <a href="{{ path('car_show', {'id': car.id}) }}"><img src="{{ asset('uploads/cars/' ~ car.image) }}" class="card-img-top" alt="..."></a>
+        <div class="card-body">
+            <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
+            <h6 class="card-title">Prix journalier {{ car.dailyPrice }}€</h6>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-outline-success" href="{{ path('car_show', {'id': car.id}) }}">Voir</a>
+                    {% if app.user %}
+                        <a class="btn btn-outline-success" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
+                    {% else %}
+                        <a class="btn btn-outline-success" href="{{ path('login') }}">Louer</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

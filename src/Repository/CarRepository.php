@@ -47,58 +47,37 @@ class CarRepository extends ServiceEntityRepository
         }
     }
 
-    public function getPaginated(int $page, int $length)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->orderBy('c.id','desc')
-            ->setFirstResult(($page - 1) * $length)
-            ->setMaxResults($length)
-            ;
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
-    public function countCars()
-    {
-        return $this->createQueryBuilder('c')
-            ->select("COUNT(c.id)")
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
 
 
-//
+//    // Fitre de recherche par date
 //    public function filter(array $filters): array
 //
 ////    SELECT c.id FROM car c WHERE c.id NOT IN ( SELECT r.car_id FROM renting r WHERE r.car_id = c.id AND r.start BETWEEN "2022-06-14 00:00:00" AND "2022-06-17 00:00:00" OR r.end BETWEEN "2022-06-14 00:00:00" AND "2022-06-17 00:00:00" );
 //    {
-////        $qb = $this->_em->createQueryBuilder()
-////            ->select('r.car')
-////            ->from(Renting::class, 'r')
-////            ->innerJoin(Car::class, 'c1')
-////            ->where('r.car = c1.id
-////            AND r.start BETWEEN :start AND :end
-////            OR r.end BETWEEN :start AND :end')
-////            ->setParameter('start', $filters['start'])
-////            ->setParameter('end', $filters['end'])
-////            ->getDQL();
-////
-////        $query = $this->_em->createQueryBuilder();
-////        $query->select('c2.id')
-////            ->from(Car::class, 'c2')
-////            ->where($query->expr()->notIn('c2.id', $qb));
-////
-////        foreach ($filters as $key => $filter) {
-////            if (!in_array($key, ['start', 'end'])) {
-////                $query->andWhere('c.' . $key . ' = ' . "'" . $filter . "'");
-////            }
-////        }
-////
-////        return $query->getQuery()->getResult();
-////    }
+//        $qb = $this->_em->createQueryBuilder()
+//            ->select('r.car')
+//            ->from(Renting::class, 'r')
+//            ->innerJoin(Car::class, 'c1')
+//            ->where('r.car = c1.id
+//            AND r.start BETWEEN :start AND :end
+//            OR r.end BETWEEN :start AND :end')
+//            ->setParameter('start', $filters['start'])
+//            ->setParameter('end', $filters['end'])
+//            ->getDQL();
+//
+//        $query = $this->_em->createQueryBuilder();
+//        $query->select('c2.id')
+//            ->from(Car::class, 'c2')
+//            ->where($query->expr()->notIn('c2.id', $qb));
+//
+//        foreach ($filters as $key => $filter) {
+//            if (!in_array($key, ['start', 'end'])) {
+//                $query->andWhere('c.' . $key . ' = ' . "'" . $filter . "'");
+//            }
+//        }
+//
+//        return $query->getQuery()->getResult();
+//    }
 //
 //
 //
@@ -125,15 +104,14 @@ class CarRepository extends ServiceEntityRepository
 //
 //        return $results;
 //    }
+//
 
 
-//    public function findOneBySomeField($value): ?Car
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //Récupère les produits en lien avec la recherche
+    public function findSearch(): array
+    {
+        return $this->findAll();
+    }
+
+
 }

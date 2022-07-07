@@ -4,21 +4,17 @@
 
 {% block body %}
 
-    <h1>Car index</h1>
+
     <main class="d-flex">
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-
+            <h1>Car index</h1>
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <span class="fs-4">Sidebar</span>
             </a>
             <hr>
-            <ul class="dropdown-menu dropdown-menu-dark position-static d-grid gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px">
-                <p class="text-center">Type de véhicule</p>
-                <li><a class="dropdown-item rounded-2" href="#">Citadines</a></li>
-                <li><a class="dropdown-item rounded-2" href="#">Utilitaires</a></li>
-                <li><a class="dropdown-item rounded-2" href="#">4X4</a></li>
-                <li><a class="dropdown-item rounded-2" href="#">Berline</a></li>
-            </ul>
+            <div class="dropdown-menu dropdown-menu-dark position-static d-grid gap-1 p-2 rounded-3 mx-0 border-0 shadow w-220px">
+                <p class="text-center" style="font-size:large">Filtrer les véhicules</p>
+                {% include 'car/filter.html.twig' with {form: form} only %}
+            </div>
 
         </div>
 
@@ -26,38 +22,11 @@
 
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-around">
-        {% for car in cars %}
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <a href="{{ path('car_show', {'id': car.id}) }}"><img src="{{ asset('uploads/cars/' ~ car.image) }}" class="card-img-top" alt="..."></a>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
-                                <h6 class="card-title">Prix journalier {{ car.dailyPrice }}€</h6>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a class="btn btn-outline-success" href="{{ path('car_show', {'id': car.id}) }}">Voir</a>
-                                        {% if app.user %}
-                                        <a class="btn btn-outline-success" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
-                                        {% else %}
-                                            <a class="btn btn-outline-success" href="{{ path('login') }}">Louer</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        {% endfor %}
+                    {% for car in cars %}
+                        {% include 'car/_card.html.twig' with {car: car} only %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </main>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-around my-1">
-    <nav class="col">
-        <ul class="pagination justify-content-center">
-            {% for i in 1..((totalCars/6)|round(0, 'ceil'))%}
-                <li class="page-item  "><a class="page-link link-dark" href="{{ path("car_index", {page: i}) }}">{{ i }}</a></li>
-            {% endfor %}
-        </ul>
-    </nav>
-</div>
 {% endblock %}
