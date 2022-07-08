@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Car;
 use App\Entity\Renting;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -108,9 +109,36 @@ class CarRepository extends ServiceEntityRepository
 
 
     //Récupère les produits en lien avec la recherche
-    public function findSearch(): array
+    public function findSearch(SearchData $search): array
     {
-        return $this->findAll();
+        $qb = $this
+            ->createQueryBuilder('c')
+            ->select('cat','c')
+            ->join('c.category', 'cat');
+        //dd($qb->getQuery());
+
+        if (!empty($search->q)) {
+            $qb = $qb
+                ->andWhere('c.brand LIKE :q')
+                ->setParameter('q', "%{$search->q}");
+        }
+        if (!empty($search->min)) {
+            $qb = $qb
+                ->andWhere('c.daily_price >= :min')
+                ->setParameter('min', $search->min);
+        }
+        if (!empty($search->max)) {
+            $qb = $qb
+                ->andWhere('c.daily_price <= :max')
+                ->setParameter('max', $search->max);
+        }
+        if (!empty($search->categories)) {
+            $qb = $qb
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
 

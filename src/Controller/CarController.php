@@ -31,11 +31,12 @@ class CarController extends AbstractController
      * @throws NoResultException
      */
     #[Route('/', name: 'car_index', methods: ['GET'])]
-    public function index(CarRepository $carRepository): Response
+    public function index(CarRepository $carRepository, Request $request): Response
     {
         $data = new SearchData();
         $form = $this->createForm(SearchType::class, $data);
-        $carsSearch = $carRepository->findSearch();
+        $form->handleRequest($request);
+        $carsSearch = $carRepository->findSearch($data);
         return $this->render('car/index.html.twig', [
             'cars' => $carRepository->findAll(),
             'carSearch' =>$carRepository,
