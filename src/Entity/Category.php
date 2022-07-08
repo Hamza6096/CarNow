@@ -15,8 +15,6 @@ class Category
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Car::class)]
-    private $car;
 
     #[ORM\Column(type: 'string', length: 45)]
     private $nameCategory;
@@ -30,10 +28,14 @@ class Category
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private $categories;
 
+    #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'categories')]
+    private $cars;
+
     public function __construct()
     {
         $this->car = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->cars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,4 +143,13 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Car>
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
 }

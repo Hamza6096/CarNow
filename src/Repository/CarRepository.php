@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Car;
+use App\Entity\Category;
 use App\Entity\Renting;
 use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -111,10 +112,11 @@ class CarRepository extends ServiceEntityRepository
     //Récupère les produits en lien avec la recherche
     public function findSearch(SearchData $search): array
     {
+
         $qb = $this
             ->createQueryBuilder('c')
             ->select('cat','c')
-            ->join('c.category', 'cat');
+            ->join('c.categories', 'cat');
         //dd($qb->getQuery());
 
         if (!empty($search->q)) {

@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormTypeInterface;
 class SearchData
 {
 
-    public string $q = '';
+    public null|string $q = '';
 
     public array $categories = [];
 

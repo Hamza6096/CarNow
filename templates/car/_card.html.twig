@@ -5,8 +5,8 @@
             <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
             <h6 class="card-title">Prix journalier {{ car.dailyPrice }}€</h6>
             <div>
-                {% for cat in car.category %}
-                    <em class="text-muted text-primary text-italic">#{{ cat.name_category }}</em>
+                {% for cat in car.categories %}
+                    <p class="text-muted text-primary text-italic">#{{ cat.nameCategory }}</p>
                 {% endfor %}
             </div>
             <div class="d-flex justify-content-between align-items-center">

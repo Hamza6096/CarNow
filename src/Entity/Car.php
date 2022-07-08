@@ -15,9 +15,7 @@ class Car
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'car')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $category;
+
 
     #[ORM\ManyToOne(targetEntity: Energy::class, inversedBy: 'car')]
     #[ORM\JoinColumn(nullable: false)]
@@ -64,11 +62,15 @@ class Car
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'cars')]
+    private $categories;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
         $this->rentings = new ArrayCollection();
         $this->equipment = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -305,6 +307,30 @@ class Car
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

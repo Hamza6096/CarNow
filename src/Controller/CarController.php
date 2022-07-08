@@ -36,10 +36,11 @@ class CarController extends AbstractController
         $data = new SearchData();
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $carsSearch = $carRepository->findSearch($data);
+        $cars = $carRepository->findSearch($data);
+//        dd($data);
         return $this->render('car/index.html.twig', [
-            'cars' => $carRepository->findAll(),
-            'carSearch' =>$carRepository,
+//            'cars' => $carRepository->findAll(),
+            'cars' =>$cars,
             'form' => $form->createView()
         ]);
     }
