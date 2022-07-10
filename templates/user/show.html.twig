@@ -68,10 +68,12 @@
     <div class="col mb-3">
         {#        <a class="btn btn-outline-success" href="{{ path('app_user_index') }}">Retour à la liste</a> #}
 
-        <a class="btn btn-outline-success" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
-        <a class="btn btn-outline-danger" href="{{ path('app_forgot_password_request') }}">Modifier mot de passe</a>
+        <div class="d-flex">
+            <a class="btn btn-outline-success mx-1" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+            <a class="btn btn-outline-danger mx-1" href="{{ path('app_forgot_password_request') }}">Modifier mot de passe</a>
+            <a class=" mx-1">{{ include('user/_delete_form.html.twig') }}</a>
+        </div>
 
-        <a class="btn btn-outline-danger mt-2">{{ include('user/_delete_form.html.twig') }}</a>
     </div>
 
 

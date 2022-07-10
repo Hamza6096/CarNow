@@ -58,13 +58,10 @@
         </div>
 
 
-        <!-- Marketing messaging and featurettes
-        ================================================== -->
-        <!-- Wrap the rest of the page in another container to center all the content. -->
 
         <div class="container marketing">
 
-            <!-- Three columns of text below the carousel -->
+
             <div class="row d-flex justify-content-around ">
                 <div class="col-lg-4  card" style="width: 18rem;" >
                     <a class="text-decoration-none text-muted" href="{{ path('car_index')  }}">
@@ -74,7 +71,7 @@
                         <p class="card-text">Some quick example text to build on the card title</p>
                     </div>
                     </a>
-                </div><!-- /.col-lg-4 -->
+                </div>
                 <div class="col-lg-4 card " style="width: 18rem;" >
                     <a class="text-decoration-none text-muted" href="{{ path('car_index') }}" >
                         <img src="{{ asset('img/imgHome/citadine.png') }}" class="card-img-top" alt="...">
@@ -83,7 +80,7 @@
                             <p class="card-text">Some quick example text to build on the card title</p>
                         </div>
                     </a>
-                </div><!-- /.col-lg-4 -->
+                </div>
                 <div class="col-lg-4 card " style="width: 18rem;" >
                     <a class="text-decoration-none text-muted" href="{{ path('car_index') }}" >
                         <img src="{{ asset('img/imgHome/boxer.png') }}" class="card-img-top" alt="...">
@@ -92,7 +89,7 @@
                             <p class="card-text">Some quick example text to build on the card title</p>
                         </div>
                     </a>
-                </div><!-- /.col-lg-4 -->
+                </div>
                 <div class="col-lg-4 card " style="width: 18rem;" >
                     <a class="text-decoration-none text-muted" href="{{ path('car_index') }}" >
                         <img src="{{ asset('img/imgHome/monospace.png') }}" class="card-img-top" alt="...">
@@ -101,26 +98,11 @@
                             <p class="card-text">Some quick example text to build on the card title</p>
                         </div>
                     </a>
-                </div><!-- /.col-lg-4 -->
-            </div><!-- /.row -->
-
-
-            <!-- START THE FEATURETTES -->
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-                <div class="col-md-7">
-                    <h2 class="featurette-heading fw-normal lh-1">Préparez vos week-ends <span class="text-muted">en toute Sérénité </span></h2>
-                    <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-                    <a href="#" class="btn btn-outline-dark px-5">Comment ça fonctionne</a>
-                </div>
-                <div class="col-sm-6 col-lg-4 mb-4">
-                    <div>
-                        <img src="{{ asset('img/imgHome/week.png') }}" alt="week">
-                    </div>
                 </div>
             </div>
+
+
+
 
             <hr class="featurette-divider">
 
@@ -129,9 +111,9 @@
                     <h2 class="featurette-heading fw-normal lh-1" >Rentabilisez votre véhicule <span class="text-muted">en quelques clics !</span></h2>
                     <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
                     {% if app.user %}
-                    <a class="btn btn-outline-dark px-5" href="{{ path('car_new', {'idUser': app.user.id}) }}">Louer ma voiture</a>
+                        <a class="btn btn-outline-dark px-5" href="{{ path('car_new', {'idUser': app.user.id}) }}">Louer ma voiture</a>
                     {% else %}
-                    <a class="btn btn-outline-dark px-5" href="{{ path('login') }}">Louer mon véhicule</a>
+                        <a class="btn btn-outline-dark px-5" href="{{ path('login') }}">Louer mon véhicule</a>
                     {% endif %}
                 </div>
                 <div class="col-sm-6 col-md-5 order-md-1 col-lg-4 mb-4">
@@ -142,10 +124,21 @@
             </div>
 
 
+            <hr class="featurette-divider">
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading fw-normal lh-1">Préparez vos week-ends <span class="text-muted">en toute Sérénité </span></h2>
+                    <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+                    <a href="#" class="btn btn-outline-dark px-5">Comment ça fonctionne ?</a>
+                </div>
+                <div class="col-sm-6 col-lg-4 mb-4">
+                    <div>
+                        <img src="{{ asset('img/imgHome/week.png') }}" alt="week">
+                    </div>
+                </div>
+            </div>
 
-            <!-- /END THE FEATURETTES -->
-
-        </div><!-- /.container -->
+        </div>
 
 
     </main>

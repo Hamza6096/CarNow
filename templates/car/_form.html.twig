@@ -1,5 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
-<a class="btn btn-outline-success" href="{{ path('car_index') }}">back to list</a>
+<button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
+{% if car.id %}
+    <a class="btn btn-outline-success" href="{{ path('car_show', {'id': car.id}) }}">Retour Voiture</a>
+{% endif %}
+<a class="btn btn-outline-success" href="{{ path('home') }}">Retour Acceuil</a>
 {{ form_end(form) }}
