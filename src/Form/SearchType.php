@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Car;
 use App\Entity\Category;
 use App\Model\SearchData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,11 +19,19 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('city', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Ville'
+                ]
+
+            ])
             ->add('q', TextType::class, [
                 'label'=>false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher'
+                    'placeholder' => 'Marque'
                 ]
             ])
             ->add('categories', EntityType::class, [

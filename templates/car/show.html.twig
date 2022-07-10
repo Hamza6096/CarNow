@@ -11,27 +11,29 @@
             <h5 class="card-title">{{ car.brand }} <span>{{ car.model }}</span></h5>
             <p class="card-text">{{ car.description }}</p>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush align-items-center">
             {% if app.user %}
-            <a class="btn btn-outline-success" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
+            <a class="btn btn-outline-success w-50 mt-2" href="{{ path('renting_new', {'idCar': car.id, 'idUser': app.user.id}) }}">Louer</a>
                 {% else %}
-                    <a class="btn btn-outline-success" href="{{ path('login') }}">Louer</a>
+                    <a class="btn btn-outline-success w-50 " href="{{ path('login') }}">Louer</a>
             {% endif %}
+            <li class="list-group-item">Ville: {{ car.city }}</li>
+            <li class="list-group-item">Adresse: {{ car.address }}</li>
             <li class="list-group-item">Prix journalier: {{ car.dailyPrice }}€</li>
             <li class="list-group-item">
                 Année: {{ car.matriculationDate ? car.matriculationDate|date('Y-m-d') : '' }}</li>
             <li class="list-group-item">Nombre de portes: {{ car.nbSeats }}</li>
             <li class="list-group-item">Nombre de places: {{ car.nbDoors }}</li>
-            <li class="list-group-item">Categorie: {{ car.categories }}</li>
+{#            <li class="list-group-item">Categorie: {{ categories.name}}</li>#}
             <li class="list-group-item">Carburant: {{ car.energy }}</li>
 {#            <li class="list-group-item">Carburant: {{ car.equipment }}</li>#}
         </ul>
-        <div class="card-body">
-            <a class="btn btn-outline-success" href="{{ path('car_index') }}">back to list</a>
+        <div class="mx-auto">
+            <a class="btn btn-outline-success" href="{{ path('car_index') }}">Retour</a>
 
-            <a class="btn btn-outline-success" href="{{ path('car_edit', {'id': car.id}) }}">edit</a>
+            <a class="btn btn-outline-success" href="{{ path('car_edit', {'id': car.id}) }}">Modifier information</a>
 
-            <a class="btn btn-outline-danger" class="btn btn-danger">{{ include('car/_delete_form.html.twig') }}</a>
+            <a class="btn" class="btn btn-danger">{{ include('car/_delete_form.html.twig') }}</a>
 
         </div>
     </div>

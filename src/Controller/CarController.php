@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -8,8 +9,6 @@ use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Repository\CarRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -21,15 +20,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/car')]
 class CarController extends AbstractController
 {
+
+
     public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
+
     #[Route('/', name: 'car_index', methods: ['GET'])]
     public function index(CarRepository $carRepository, Request $request): Response
     {
@@ -37,7 +35,7 @@ class CarController extends AbstractController
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
         $cars = $carRepository->findSearch($data);
-//        dd($data);
+        //dd($data);
         return $this->render('car/index.html.twig', [
 //            'cars' => $carRepository->findAll(),
             'cars' =>$cars,
@@ -56,8 +54,6 @@ class CarController extends AbstractController
 //    }
 
 
-
-
     #[Route('/new/user{idUser}', name: 'car_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CarRepository $carRepository, UserRepository $userRepository, SluggerInterface $slugger): Response
     {
@@ -71,27 +67,22 @@ class CarController extends AbstractController
 
             $brochureFile = $form->get('photo')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+
             if ($brochureFile) {
                 $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
 
-                // Move the file to the directory where brochures are stored
                 try {
                     $brochureFile->move(
                         $this->getParameter('car_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
                     $this->addFlash('danger', 'erreur upload');
                 }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
+
                 $car->setImage($newFilename);
             }
 
@@ -125,27 +116,26 @@ class CarController extends AbstractController
 
             $brochureFileEdit = $form->get('photo')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+
             if ($brochureFileEdit) {
                 $originalFilename = pathinfo($brochureFileEdit->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
+
+
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFileEdit->guessExtension();
 
-                // Move the file to the directory where brochures are stored
+
                 try {
                     $brochureFileEdit->move(
                         $this->getParameter('car_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+
                     $this->addFlash('danger', 'erreur upload');
                 }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
+
                 $car->setImage($newFilename);
             }
 
@@ -169,10 +159,10 @@ class CarController extends AbstractController
 
         return $this->redirectToRoute('car_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/{id}', name: 'car_delete', methods: ['POST'])]
-    public function deletImage()
-    {
-
-    }
+//
+//    #[Route('/{id}', name: 'car_delete', methods: ['POST'])]
+//    public function deletImage()
+//    {
+//
+//    }
 }

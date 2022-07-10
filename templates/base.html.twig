@@ -44,10 +44,10 @@
                         <a class="nav-link active" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon compte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('car_new', {'idUser': app.user.id}) }}">Louer mon véhicule</a>
+                        <a class="nav-link active" href="{{ path('car_new', {'idUser': app.user.id}) }}">Louer mon véhicule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/car">Rechercher un véhicule</a>
+                        <a class="nav-link active" href="/car">Rechercher un véhicule</a>
                     </li>
                 {% else %}
                     <li class="nav-item">

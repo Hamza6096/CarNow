@@ -3,17 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Car;
-use App\Entity\Category;
-use App\Entity\Renting;
 use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
-use http\Env\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use function Doctrine\ORM\QueryBuilder;
 
 /**
@@ -119,19 +111,24 @@ class CarRepository extends ServiceEntityRepository
             ->join('c.categories', 'cat');
         //dd($qb->getQuery());
 
+        if (!empty($search->city)) {
+            $qb = $qb
+                ->andWhere('c.city LIKE :city')
+                ->setParameter('city', "%{$search->city}%");
+        }
         if (!empty($search->q)) {
             $qb = $qb
                 ->andWhere('c.brand LIKE :q')
-                ->setParameter('q', "%{$search->q}");
+                ->setParameter('q', "%{$search->q}%");
         }
         if (!empty($search->min)) {
             $qb = $qb
-                ->andWhere('c.daily_price >= :min')
+                ->andWhere('c.dailyPrice >= :min')
                 ->setParameter('min', $search->min);
         }
         if (!empty($search->max)) {
             $qb = $qb
-                ->andWhere('c.daily_price <= :max')
+                ->andWhere('c.dailyPrice <= :max')
                 ->setParameter('max', $search->max);
         }
         if (!empty($search->categories)) {
@@ -139,7 +136,6 @@ class CarRepository extends ServiceEntityRepository
                 ->andWhere('c.id IN (:categories)')
                 ->setParameter('categories', $search->categories);
         }
-
         return $qb->getQuery()->getResult();
     }
 

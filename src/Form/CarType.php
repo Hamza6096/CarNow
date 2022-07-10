@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Car;
+use App\Entity\Category;
 use App\Entity\Equipment;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,8 @@ class CarType extends AbstractType
         $builder
             ->add('brand', TextType::class, ['label' => 'Marque'])
             ->add('model', TextType::class, ['label' => 'Modèle'])
+            ->add('address', TextType::class, ['label' => 'Localisation véhicule: Adresse'])
+            ->add('city', TextType::class, ['label' => 'Localisation véhicule: Ville'])
             ->add('matriculation', TextType::class, ['label' => 'Immatriculation'])
             ->add('matriculationDate', DateType::class, [
                 'widget' => 'single_text',
@@ -32,7 +35,11 @@ class CarType extends AbstractType
             ->add('nbDoors', TextType::class, ['label' => 'Nombre de porte'])
             ->add('dailyPrice', MoneyType::class,['label' => 'Prix Journalier'])
             ->add('description', TextType::class, ['label' => 'Description'])
-            ->add('category')
+            ->add('categories', EntityType::class, [
+                'expanded' => true,
+                'multiple' => true,
+                'class' => Category::class,
+            ])
             ->add('energy')
             ->add('equipment', EntityType::class, [
                 'expanded' => true,

@@ -15,8 +15,6 @@ class Car
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
-
     #[ORM\ManyToOne(targetEntity: Energy::class, inversedBy: 'car')]
     #[ORM\JoinColumn(nullable: false)]
     private $energy;
@@ -65,6 +63,13 @@ class Car
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'cars')]
     private $categories;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $address;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $city;
+
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -78,17 +83,6 @@ class Car
         return $this->id;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getEnergy(): ?Energy
     {
@@ -284,7 +278,7 @@ class Car
 
     public function __toString()
     {
-        return $this->id . $this->equipment;
+        return $this->id ;
     }
 
     public function getOwner(): ?User
@@ -335,4 +329,27 @@ class Car
         return $this;
     }
 
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
 }

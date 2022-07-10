@@ -15,26 +15,17 @@ class Category
     #[ORM\Column(type: 'integer')]
     private $id;
 
-
-    #[ORM\Column(type: 'string', length: 45)]
-    private $nameCategory;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $name;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $slug;
-
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
-    private $parent;
-
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    private $categories;
 
     #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'categories')]
     private $cars;
 
     public function __construct()
     {
-        $this->car = new ArrayCollection();
-        $this->categories = new ArrayCollection();
         $this->cars = new ArrayCollection();
     }
 
@@ -43,51 +34,16 @@ class Category
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Car>
-     */
-    public function getCar(): Collection
+    public function getName(): ?string
     {
-        return $this->car;
+        return $this->name;
     }
 
-    public function addCar(Car $car): self
+    public function setName(string $name): self
     {
-        if (!$this->car->contains($car)) {
-            $this->car[] = $car;
-            $car->setCategory($this);
-        }
+        $this->name = $name;
 
         return $this;
-    }
-
-    public function removeCar(Car $car): self
-    {
-        if ($this->car->removeElement($car)) {
-            // set the owning side to null (unless already changed)
-            if ($car->getCategory() === $this) {
-                $car->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getNameCategory(): ?string
-    {
-        return $this->nameCategory;
-    }
-
-    public function setNameCategory(string $nameCategory): self
-    {
-        $this->nameCategory = $nameCategory;
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->nameCategory;
     }
 
     public function getSlug(): ?string
@@ -102,54 +58,36 @@ class Category
         return $this;
     }
 
-    public function getParent(): ?self
-    {
-        return $this->parent;
-    }
-
-    public function setParent(?self $parent): self
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, self>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(self $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(self $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            // set the owning side to null (unless already changed)
-            if ($category->getParent() === $this) {
-                $category->setParent(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Car>
      */
     public function getCars(): Collection
     {
         return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->removeElement($car)) {
+            $car->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
 }

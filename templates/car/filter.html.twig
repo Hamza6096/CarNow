@@ -1,9 +1,12 @@
 {{ form_start(form, {attr: {class: 'filter'}}) }}
+{{ form_row(form.city) }}
+
 {{ form_row(form.q) }}
 
-<h4>Catégories</h4>
+<h5>Catégories</h5>
 {{ form_row(form.categories) }}
 
+<h5>Prix</h5>
 <div class="row">
     {{ form_row(form.min) }}
     {{ form_row(form.max) }}
